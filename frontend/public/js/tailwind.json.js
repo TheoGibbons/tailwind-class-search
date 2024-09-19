@@ -1,4 +1,4 @@
-{
+const TailwindCSSJSON = {
   "container": [
     "width: 100%;"
   ],

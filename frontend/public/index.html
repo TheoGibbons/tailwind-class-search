@@ -9,6 +9,7 @@
 <body class="p-6">
     <h1 class="text-2xl mb-4">Tailwind CSS Class Search</h1>
 
+    <label for="search" class="sr-only">Search</label>
     <input
         id="search"
         type="text"
@@ -19,15 +20,16 @@
 
     <table id="resultsTable" class="min-w-full bg-white">
         <thead>
-            <tr>
-                <th class="py-2 border-b">Classname</th>
-                <th class="py-2 border-b">CSS Properties</th>
+            <tr class="bg-gray-50">
+                <th class="p-2 border text-left" style="width: 50%;">Classname</th>
+                <th class="p-2 border text-left" style="width: 50%;">CSS Properties</th>
             </tr>
         </thead>
-        <tbody id="resultsTableBody">
+        <tbody>
         </tbody>
     </table>
 
+    <script src="js/tailwind.json.js"></script>
     <script src="js/filter.js"></script>
 </body>
 </html>

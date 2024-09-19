@@ -1,6 +1,6 @@
 const express = require('express');
 const path = require('path');
-const tailwindJSON = require('../frontend/public/assets/tailwind.json');
+const tailwindJSON = require('../frontend/public/js/tailwind.json.js');
 
 const app = express();
 

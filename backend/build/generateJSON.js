@@ -13,8 +13,8 @@ async function downloadAndProcessCSS() {
     const jsonOutput = processCSS(cssContent);
 
     // Save processed JSON to file
-    const outputJSONFilePath = path.resolve(__dirname, '../../frontend/public/assets/tailwind.json');
-    fs.writeFileSync(outputJSONFilePath, JSON.stringify(jsonOutput, null, 2));
+    const outputJSONFilePath = path.resolve(__dirname, '../../frontend/public/js/tailwind.json.js');
+    fs.writeFileSync(outputJSONFilePath, "const TailwindCSSJSON = " + JSON.stringify(jsonOutput, null, 2));
     console.log('CSS processed and JSON generated at:', outputJSONFilePath);
 
   } catch (error) {
