@@ -1,0 +1,14 @@
+{
+  "name": "tailwind-css-processor",
+  "version": "1.0.0",
+  "description": "A small app that processes Tailwind CSS and provides a search interface",
+  "main": "server.js",
+  "scripts": {
+    "build": "node backend/build/generateJSON.js",
+    "start": "node backend/server.js"
+  },
+  "dependencies": {
+    "axios": "^1.*",
+    "express": "^4.*"
+  }
+}
