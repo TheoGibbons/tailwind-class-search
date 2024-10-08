@@ -1,3 +1,13 @@
+function doesMatch(row, search) {
+  const className = row.cells[0].textContent.toLowerCase();
+  const cssProperties = row.cells[1].textContent.toLowerCase();
+
+  const searchParts = search.split(/[ _-]/)
+
+  // All search parts must be found in either the class name or CSS properties
+  return searchParts.every(part => className.includes(part) || cssProperties.includes(part));
+}
+
 // Function to filter the results based on search input
 function filterResults() {
   const search = document.getElementById('search').value.toLowerCase();
@@ -5,11 +15,9 @@ function filterResults() {
 
   // Loop through all rows and filter based on class name or CSS properties
   rows.forEach(row => {
-    const className = row.cells[0].textContent.toLowerCase();
-    const cssProperties = row.cells[1].textContent.toLowerCase();
 
     // Check if search term is found in the class name or CSS properties
-    if (className.includes(search) || cssProperties.includes(search)) {
+    if (doesMatch(row, search)) {
       row.style.display = '';  // Show the row if it matches the search
     } else {
       row.style.display = 'none';  // Hide the row if it doesn't match
