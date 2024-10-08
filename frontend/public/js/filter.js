@@ -1,28 +1,55 @@
-function doesMatch(row, search) {
+function calculateSearchScore(row, searchString) {
   const className = row.cells[0].textContent.toLowerCase();
   const cssProperties = row.cells[1].textContent.toLowerCase();
+  const cssPropertiesSplit = cssProperties.split(';').filter(l => l);
 
-  const searchParts = search.split(/[ _-]/)
+  if (className === searchString) {
+    return 100;
+  }
 
-  // All search parts must be found in either the class name or CSS properties
-  return searchParts.every(part => className.includes(part) || cssProperties.includes(part));
+  if (cssPropertiesSplit.includes(searchString.replace(/;/g, ''))) {
+    return 99;
+  }
+
+  // Split the search string into parts then return the number of parts that match as a percentage of 98
+  const searchParts = searchString.split(/[ _-]/)
+  const matches = searchParts.filter(part => className.includes(part) || cssProperties.includes(part));
+  if (matches.length > 0) {
+    return 98 * (matches.length / searchParts.length);
+  }
+
+  if (className.startsWith(searchString)) {
+    return 50;
+  }
+
+  return 0;
+}
+
+function addRowSearchScore(row, searchString) {
+  // Add the search score to the row
+  row.searchScore = calculateSearchScore(row, searchString);
 }
 
 // Function to filter the results based on search input
 function filterResults() {
-  const search = document.getElementById('search').value.toLowerCase();
+  const searchString = document.getElementById('search').value.toLowerCase();
   const rows = document.querySelectorAll('#resultsTable tbody tr');
 
   // Loop through all rows and filter based on class name or CSS properties
-  rows.forEach(row => {
+  rows.forEach(row => addRowSearchScore(row, searchString));
 
-    // Check if search term is found in the class name or CSS properties
-    if (doesMatch(row, search)) {
-      row.style.display = '';  // Show the row if it matches the search
-    } else {
-      row.style.display = 'none';  // Hide the row if it doesn't match
-    }
-  });
+  // Empty the table
+  const tableBody = document.querySelector('#resultsTable tbody');
+  tableBody.innerHTML = '';
+
+  // Sort the rows based on search score
+  const sortedRows = Array.from(rows).sort((a, b) => b.searchScore - a.searchScore);
+
+  // If any row has a search score === 0, hide it
+  sortedRows.forEach(row => row.style.display = row.searchScore === 0 ? 'none' : '');
+
+  // Append the sorted rows to the table
+  sortedRows.forEach(row => tableBody.appendChild(row));
 }
 
 // document.addEventListener('DOMContentLoaded', function () {
