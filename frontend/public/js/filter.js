@@ -1,7 +1,6 @@
 function calculateSearchScore(row, searchString) {
   const className = row.cells[0].textContent.toLowerCase();
   const cssProperties = row.cells[1].textContent.toLowerCase().trim();
-  const cssPropertiesSplit = cssProperties.split(';').filter(l => l);
 
   if (className === searchString) {
     return 100;
@@ -11,6 +10,7 @@ function calculateSearchScore(row, searchString) {
     return 100;
   }
 
+  const cssPropertiesSplit = cssProperties.split(';').filter(l => l);
   if (cssPropertiesSplit.includes(searchString.replace(/;/g, ''))) {
     return 99;
   }
