@@ -1,9 +1,13 @@
 function calculateSearchScore(row, searchString) {
   const className = row.cells[0].textContent.toLowerCase();
-  const cssProperties = row.cells[1].textContent.toLowerCase();
+  const cssProperties = row.cells[1].textContent.toLowerCase().trim();
   const cssPropertiesSplit = cssProperties.split(';').filter(l => l);
 
   if (className === searchString) {
+    return 100;
+  }
+
+  if (cssProperties === searchString) {
     return 100;
   }
 
@@ -12,7 +16,7 @@ function calculateSearchScore(row, searchString) {
   }
 
   // Split the search string into parts then return the number of parts that match as a percentage of 98
-  const searchParts = searchString.split(/[ _-]/)
+  const searchParts = searchString.split(/[ _-]/);
   const matches = searchParts.filter(part => className.includes(part) || cssProperties.includes(part));
   if (matches.length > 0) {
     return 98 * (matches.length / searchParts.length);
@@ -26,8 +30,8 @@ function calculateSearchScore(row, searchString) {
 }
 
 function addRowSearchScore(row, searchString) {
-  // Add the search score to the row
-  row.searchScore = calculateSearchScore(row, searchString);
+  // Add the search score to the row using dataset
+  row.dataset.searchScore = calculateSearchScore(row, searchString);
 }
 
 // Function to filter the results based on search input
@@ -43,14 +47,15 @@ function filterResults() {
   tableBody.innerHTML = '';
 
   // Sort the rows based on search score
-  const sortedRows = Array.from(rows).sort((a, b) => b.searchScore - a.searchScore);
+  const sortedRows = Array.from(rows).sort((a, b) => Number(b.dataset.searchScore) - Number(a.dataset.searchScore));
 
   // If any row has a search score === 0, hide it
-  sortedRows.forEach(row => row.style.display = row.searchScore === 0 ? 'none' : '');
+  sortedRows.forEach(row => row.style.display = Number(row.dataset.searchScore) === 0 ? 'none' : '');
 
   // Append the sorted rows to the table
   sortedRows.forEach(row => tableBody.appendChild(row));
 }
+
 
 // document.addEventListener('DOMContentLoaded', function () {
 //   fetch('js/tailwind.json.js')
