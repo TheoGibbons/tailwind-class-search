@@ -4,25 +4,29 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Tailwind CSS Class Search</title>
-    <link href="css/tailwind.min.css" rel="stylesheet">
+    <style>
+        table { border-collapse: collapse; }
+        th, td { padding :8px; outline: 1px solid #ddd; }
+        tr th { background-color: rgba(249, 250, 251, 1); text-align: left; }
+        input { width:100%; margin-bottom: 16px; padding: 8px; border: 1px solid #ddd; border-radius: 4px; }
+    </style>
 </head>
-<body class="p-6">
-    <h1 class="text-2xl mb-4">Tailwind CSS Class Search</h1>
+<body>
+    <h1>Tailwind CSS Class Search</h1>
 
-    <label for="search" class="sr-only">Search</label>
+    <label for="search" style="display: none">Search</label>
     <input
         id="search"
         type="text"
         placeholder="Search..."
-        class="p-2 border rounded mb-4 w-full"
         oninput="filterResults()"
     />
 
-    <table id="resultsTable" class="min-w-full bg-white">
+    <table id="resultsTable">
         <thead>
-            <tr class="bg-gray-50">
-                <th class="p-2 border text-left" style="width: 50%;">Classname</th>
-                <th class="p-2 border text-left" style="width: 50%;">CSS Properties</th>
+            <tr>
+                <th style="width: 50%;">Classname</th>
+                <th style="width: 50%;">CSS Properties</th>
             </tr>
         </thead>
         <tbody>

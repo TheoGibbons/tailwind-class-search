@@ -67,7 +67,6 @@ function filterResults() {
         const row = document.createElement('tr');
         const classCell = document.createElement('td');
         classCell.textContent = key;
-        classCell.classList.add('border', 'p-2');
 
         const cssCell = document.createElement('td');
         TailwindCSSJSON[key].forEach((value, index) => {
@@ -80,7 +79,6 @@ function filterResults() {
             cssCell.appendChild(document.createElement('br'));
           }
         });
-        cssCell.classList.add('border', 'p-2');
 
         row.appendChild(classCell);
         row.appendChild(cssCell);
